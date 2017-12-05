@@ -40,18 +40,20 @@ def movebackwards():
 def turnright():
 	# Note: Output arrangement is important to make sure there is no jitter in the motors when turning Right/Left
 	# TODO: explain the reason for the arrangement in detail in the documentation. 
-	GPIO.output(LEFT1, GPIO.HIGH)
-	GPIO.output(RIGHT2, GPIO.LOW)
+	# Rotation is done by reversing the right motor, while other motors are off, and therefore doing a circle turn right.
 	GPIO.output(RIGHT1, GPIO.LOW)
+	GPIO.output(LEFT1, GPIO.LOW)
+	GPIO.output(RIGHT2, GPIO.HIGH)
 	GPIO.output(LEFT2, GPIO.LOW)
 	
 def turnleft():
 	# Note: Output arrangement is important to make sure there is no jitter in the motors when turning Right/Left
 	# TODO: explain the reason for the arrangement in detail in the documentation. 
-	GPIO.output(RIGHT1, GPIO.HIGH)
-	GPIO.output(LEFT2, GPIO.LOW)
+	# Rotation is done by reversing the left motor, while other motors are off, and therefore doing a circle turn left.
+	GPIO.output(RIGHT1, GPIO.LOW)
 	GPIO.output(LEFT1, GPIO.LOW)
 	GPIO.output(RIGHT2, GPIO.LOW)
+	GPIO.output(LEFT2, GPIO.HIGH)
 
 def stop():
 	GPIO.output(RIGHT1, GPIO.LOW)
