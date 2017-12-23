@@ -1,0 +1,143 @@
+﻿<style type="text/css">
+	.words
+	{
+		font-size: 15pt;
+		text-align:center;
+		background-color:grey;
+		font-weight: bold;
+	}
+	.theadr
+	{
+		text-align: center;
+		width: 20px;
+	}
+	.trOperationStyle
+	{
+		border: 2pt solid;
+		width: 20px;
+	}
+	.tcolumn
+	{
+		vertical-align: top;
+		background-color: #00000;
+		/*border: 2pt solid;*/
+		font-size: 15pt;
+		text-align: center;
+	}
+	.emptytcolumn
+	{
+		width: 100px;
+	}
+</style>
+
+<div style="text-align: right;vertical-align: center;padding:10px">
+		<table id='myTable'>
+			<thead>
+				<th class="trOperationStyle" id="backwardStatus"> <input onclick="moveMachineBackward()" type='image' src='backward.png' title='Backward'> </input> </th>
+				<th class="emptytcolumn"></th>
+				<th class="trOperationStyle" id="forwardStatus"> <input onclick="moveMachineForward()" type='image' src='forward.png' title='Forward'> </input> </th>
+				<th class="emptytcolumn"></th>
+			</thead>
+		</table><br>
+</div>
+
+<script type="text/javascript">
+
+	// TODO: revise & clean scripts, remove unneeded components
+	
+	//////////////////////////////////////////////////////////////////////////////
+	// 								Backword
+	//////////////////////////////////////////////////////////////////////////////
+	function moveMachineBackward(){
+		console.log("Move Machine Backword");
+		
+		var moveLength = document.getElementById('txtBackword').value;
+		if (isNaN(moveLength) || moveLength == "")
+		{
+			document.getElementById('txtBackword').style.backgroundColor = "Red";
+			return;
+		}
+		var angleValue = parseInt(moveLength);
+		if (angleValue < 0)
+		{
+			document.getElementById('txtBackword').style.backgroundColor = "Red";
+			return;
+		}
+		document.getElementById('txtBackword').style.backgroundColor = "White";
+		
+		var status = "ERR";
+		
+		var Data = {};
+		Data['moveMachineBackward'] = moveLength;
+		
+		document.getElementById('backwardStatus').style.backgroundColor = "Yellow";
+		var xhr = $.ajax({
+			url: 'machine_control.php',
+			type: 'POST',
+			data: Data,
+			async:true,
+			cache: false,
+			success: function(response) 
+			{ 
+				document.getElementById('backwardStatus').style.backgroundColor = "White";
+				status = "OK";
+				console.log("returned json from moveMachineBackword operation = " + response);
+				var parsedJSON = eval('('+response+')');
+				if (parsedJSON.hasOwnProperty("status")) {
+					status = parsedJSON["status"];
+				}
+			}
+		});
+		console.log(status);
+	}	
+	
+	//////////////////////////////////////////////////////////////////////////////
+	// 								Forword
+	//////////////////////////////////////////////////////////////////////////////
+	function moveMachineForward(){
+		console.log("Move Machine Forword");
+		
+		var moveLength = document.getElementById('txtForword').value;
+		if (isNaN(moveLength) || moveLength == "")
+		{
+			document.getElementById('txtForword').style.backgroundColor = "Red";
+			return;
+		}
+		var angleValue = parseInt(moveLength);
+		if (angleValue < 0)
+		{
+			document.getElementById('txtForword').style.backgroundColor = "Red";
+			return;
+		}
+		document.getElementById('txtForword').style.backgroundColor = "White";
+		
+		var status = "OK";
+		var errMessage = "OK";
+		var Data = {};
+		Data["moveMachineForward"] = moveLength;
+	
+		document.getElementById('forwardStatus').style.backgroundColor = "Yellow";
+		var xhr = $.ajax({
+			url: 'machine_control.php',
+			type: 'POST',
+			data: Data,
+			async:true,
+			cache: false,
+			success: function(response) 
+			{ 
+				document.getElementById('forwardStatus').style.backgroundColor = "White";
+				console.log("returned json from moveMachineForword operation = " + response);
+				var parsedJSON = eval('('+response+')');
+				if (parsedJSON.hasOwnProperty("status")) {
+					status = parsedJSON["status"];
+					errMessage =parsedJSON["errorMessages"];
+				}
+			}
+		});
+		
+		console.log("---  " + status);
+	}	
+</script>
+
+
+	
