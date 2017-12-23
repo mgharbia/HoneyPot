@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HoneyBot Control Panel</title>
+<style type="text/css">
+     .box {
+        width: 155px;
+        height: 155px;
+        margin: 25% 0 auto;
+        background: yellowgreen;
+		border-radius: 50%;
+		position: fixed;
+		bottom: 10px;
+    }
+	
+	.div_box {
+		width: 50px;
+        height: 30px;
+		position: relative;
+		top: 20%;
+        margin: 0 auto;
+	}
+	
+	.div_box.top_row {
+		top: 5px;
+	}
+
+	.div_box.middle_row {
+		width: 133px;
+		top: 14px;
+	
+	}
+	
+	.div_box.down_row {
+		top: 35px;
+	}
+	
+	.div_box span {
+		font-size: 50px;
+		position: relative;
+        margin: auto 0;
+	}
+	
+	.hover {
+		color: #FF0000;
+	}
+	
+</style>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+
+
+
+
+// A $( document ).ready() block.
+$( document ).ready(function() {
+    globals.init();
+});
+
+var globals = {
+	init: function () {
+		//Key released 
+		$(document).keyup(function(e){
+		   globals.setArrowColor(e.which, "black", false);
+		});
+		
+		//Key pressed
+		$(document).keydown(function(e){
+			globals.setArrowColor(e.which, "red", true);
+		});
+		
+		$(".div_box span").hover(
+		  function() {
+			if(this.className == "center_box") { 
+				return; 
+			}
+			$( this ).addClass( "hover" );
+		  }, function() {
+			$( this ).removeClass( "hover" );
+		  }
+		);
+		
+		$(".div_box span").click(function() {
+			globals.clickedArrow(this.className, true);
+		});
+			
+	}, 
+	setArrowColor: function (arrowKey, color, trigger) {
+		switch (arrowKey) {
+			case 37:
+				//left arrow key
+				$(".left_arrow").css("color", color);
+				globals.clickedArrow("left_arrow", trigger);
+				break;
+			case 38:    //up arrow key
+				$(".up_arrow").css("color", color);
+				globals.clickedArrow("up_arrow", trigger);
+				break;
+			case 39:    //right arrow key
+				$(".right_arrow").css("color", color);
+				globals.clickedArrow("right_arrow", trigger);
+				break;
+			case 40:    //bottom arrow key
+				$(".down_arrow").css("color", color);
+				globals.clickedArrow("down_arrow", trigger);
+				break;
+			default:
+				//console.log("There was an error in the key code: " + arrowKey + ", color: " + color);
+				break;
+		}
+	},
+	clickedArrow: function (elementName, trigger) {
+		if(trigger) {
+			//globals.emitEvent(elementName.replace("hover", ""));
+		}
+	},
+	emitEvent: function (param) {
+		$.ajax({
+			url: "mypage.php?key=" + param,
+			type: "POST",
+			data: "key=" + param,
+			success: function(){
+				alert("success");
+			},
+			error: function(){
+				alert("failure");
+			}
+		});
+	}
+}
+
+
+</script>
+</head>
+<body>
+    <p>Controls</p>
+    <div class="box">
+		<div class="div_box top_row">
+			<span class="up_arrow">&#9650;</span>
+		</div> 
+		<div class="div_box middle_row">
+			<span class="left_arrow">&#x25c0;</span>
+			<span class="center_box">&#x2680;</span>
+			<span class="right_arrow">&#9654;</span>
+		</div> 
+		<div class="div_box down_row">
+			<span class="down_arrow">&#9660;</span>
+		</div> 
+	</div>
+</body>
+</html>
