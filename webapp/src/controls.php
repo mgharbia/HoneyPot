@@ -7,46 +7,23 @@ require 'common.php';
 /////////////////////////////////////////////////////////////////////
 
 //PARAMS
-$moveCommand = $_GET["cmd"];
-$movementTrigger = $_GET["trigger"];
+$directionCommand = $_GET["direction"];
+$movementTrigger = $_GET["movement"];
 
 //LOGIC
-$res = new Result();
+$res = new Response();
+$res->movement = $movementTrigger;
+$res->direction = $directionCommand;
 
-$res->trigger = $movementTrigger;
-
-//Use execute_process function in common.php to move the robot
-switch ($moveCommand ) {
-    case "up":
-	    // TODO find better way to do this shit -_- 
-		switch ($movementTrigger ) {
-			case "true":
-				$res->cmd = "go up";
-				break;
-			default:
-				$res->cmd = "end up";
-		}
-        break;
-    case "down":
-        $res->cmd = "go back";
-        break;
-    case "right":
-        $res->cmd = "go right";
-        break;
-	case "left":
-        $res->cmd = "go left";
-        break;
-    default:
-        $res->cmd = "don't go anywhere";
-}
+$output = execute_process("python commands/motor.py " . $directionCommand . " " . $movementTrigger);
 
 // temp class till we return real results! 
-class Result {
-	var $cmd;
-	var $trigger;
+class Response {
+	var $direction;
+	var $movement;
 }
 
-echo json_encode($res);
+echo json_encode($output);
 
 
 ?>

@@ -35,43 +35,53 @@ var controls = {
 		});
 			
 	}, 
-	setArrowColor: function (arrowKey, color, trigger) {
+	setArrowColor: function (arrowKey, color, movement) {
 		switch (arrowKey) {
 			case 37:
 				//left arrow key
 				$(".left_arrow").css("color", color);
-				controls.clickedArrow("left_arrow", trigger);
+				controls.clickedArrow("left_arrow", movement);
 				break;
 			case 38:    //up arrow key
 				$(".up_arrow").css("color", color);
-				controls.clickedArrow("up_arrow", trigger);
+				controls.clickedArrow("up_arrow", movement);
 				break;
 			case 39:    //right arrow key
 				$(".right_arrow").css("color", color);
-				controls.clickedArrow("right_arrow", trigger);
+				controls.clickedArrow("right_arrow", movement);
 				break;
 			case 40:    //bottom arrow key
 				$(".down_arrow").css("color", color);
-				controls.clickedArrow("down_arrow", trigger);
+				controls.clickedArrow("down_arrow", movement);
 				break;
 			default:
 				//console.log("There was an error in the key code: " + arrowKey + ", color: " + color);
 				break;
 		}
 	},
-	clickedArrow: function (elementName, trigger) {
-		controls.emitEvent(elementName.replace("hover", ""), trigger);
+	clickedArrow: function (elementName, movement) {
+		controls.emitEvent(elementName.replace("hover", ""), movement);
 	},
-	emitEvent: function (param, trigger) {
+	emitEvent: function (param, movement) {
 		$.ajax({
-			url: "src/controls.php?cmd=" + param.split("_")[0] + "&trigger=" + trigger,
+			url: "src/controls.php?direction=" + param.split("_")[0] + "&movement=" + movement,
 			type: "POST",
 			data: "key=" + param,
 			success: function(data){
-				console.log(data);
+				console.log("AJAX success:");
+				var result = JSON.parse(data);
+				if(result.stderr.length > 0) {
+					console.log("PANIC -> ROBOT movement error:");
+					console.log(result.stderr);
+					console.log("=============== Sending STOP action !!!");
+					controls.emitEvent("none", false);
+				} else {
+					console.log(data);
+				}
 			},
-			error: function(){
-				console.log("failure");
+			error: function(info){
+				console.log("AJAX error:");
+				console.log(info);
 			}
 		});
 	}
