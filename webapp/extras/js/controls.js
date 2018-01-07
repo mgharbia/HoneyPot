@@ -69,6 +69,8 @@ var controls = {
 			data: "key=" + param,
 			success: function(data){
 				console.log("AJAX success:");
+                               console.log(data);
+                               return;
 				var result = JSON.parse(data);
 				if(result.stderr.length > 0) {
 					console.log("PANIC -> ROBOT movement error:");

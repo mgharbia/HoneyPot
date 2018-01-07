@@ -1,13 +1,13 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 import sys
 import RPi.GPIO as GPIO
 
 #Standard Pin Definitions for motor
-RIGHT1 = 17
-RIGHT2 = 18
-LEFT1 = 22
-LEFT2 = 23
+RIGHT1 = 5
+RIGHT2 = 3
+LEFT1 = 13
+LEFT2 = 11
 
 def main():
     """Main runnable method"""
@@ -19,7 +19,7 @@ def main():
     direction = sys.argv[1:][0]
     movement = sys.argv[1:][1]
 
-    initmotorpins()
+    initmotorpins() 
 
     if movement != 'false':
         if direction == 'up':
@@ -33,13 +33,15 @@ def main():
 
     print movement
 
-    stop()
     return 200
 
 
 def initmotorpins():
     """init pins"""
-    #Set pins as outputs
+    #Set pins as outputs 
+    GPIO.setwarnings(False)
+    GPIO.cleanup()
+    GPIO.setmode(GPIO.BOARD)
     GPIO.setup(RIGHT1, GPIO.OUT)
     GPIO.setup(RIGHT2, GPIO.OUT)
     GPIO.setup(LEFT1, GPIO.OUT)
@@ -52,10 +54,10 @@ def initmotorpins():
 def moveforward():
     """init pins"""
     print 'moveforward'
-    # GPIO.output(RIGHT1, GPIO.HIGH)
-    # GPIO.output(LEFT1, GPIO.HIGH)
-    # GPIO.output(RIGHT2, GPIO.LOW)
-    # GPIO.output(LEFT2, GPIO.LOW)
+    GPIO.output(RIGHT1, GPIO.HIGH)
+    GPIO.output(LEFT1, GPIO.HIGH)
+    GPIO.output(RIGHT2, GPIO.LOW)
+    GPIO.output(LEFT2, GPIO.LOW)
 
 def movebackwards():
     """move backwards"""
@@ -89,10 +91,10 @@ def turnleft():
 
 def stop():
     """STOP ALL KIND OF MOVEMENTS"""
-    GPIO.output(RIGHT1, GPIO.LOW)
-    GPIO.output(LEFT1, GPIO.LOW)
-    GPIO.output(RIGHT2, GPIO.LOW)
-    GPIO.output(LEFT2, GPIO.LOW)
+    GPIO.output(RIGHT1, GPIO.HIGH)
+    GPIO.output(LEFT1, GPIO.HIGH)
+    GPIO.output(RIGHT2, GPIO.HIGH)
+    GPIO.output(LEFT2, GPIO.HIGH)
 
 if __name__ == "__main__":
     main()
