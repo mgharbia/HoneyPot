@@ -12,3 +12,6 @@ suggestions:
 1. Making a VR Laser Tag War.
 2. Use Bot over robot so he can interact with voice and answer it.
 
+!ISSUES 
+1. Fix permission of gpiomem to be rootless access in order to work with python
+2. Install vlc-nox to run the RTMP server
