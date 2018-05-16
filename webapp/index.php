@@ -13,7 +13,7 @@
 <body>
     <p>Controls</p>
 
-    <img src="http://localhost:8080/?action=stream">
+    <img src="http://<?php echo $_SERVER['HTTP_HOST']; ?>:8080/?action=stream">
     <div class="box">
 		<div class="div_box top_row">
 			<span class="up_arrow">&#9650;</span>
