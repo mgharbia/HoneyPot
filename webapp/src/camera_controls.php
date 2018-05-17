@@ -4,7 +4,7 @@
 require 'common.php';
 
 /////////////////////////////////////////////////////////////////////
-//				    	Machine Controls						   //
+//				    	Camera Controls						   //
 /////////////////////////////////////////////////////////////////////
 
 //PARAMS
@@ -16,7 +16,7 @@ $res = new Response();
 $res->movement = $movementTrigger;
 $res->direction = $directionCommand;
 
-$output = execute_process("commands/motor.py " . $directionCommand . " " . $movementTrigger);
+$output = execute_process("commands/camera.py " . $directionCommand . " " . $movementTrigger);
 
 // temp class till we return real results! 
 class Response {
