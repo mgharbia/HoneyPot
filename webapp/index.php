@@ -9,12 +9,12 @@
 <script src="extras/js/jquery-1.12.4.min.js"></script>
 <script src="extras/js/robot_controls.js"></script>
 <script src="extras/js/camera_controls.js"></script>
-<!--http://<?php echo $_SERVER['HTTP_HOST']; ?>:8080/?action=stream-->
+<!--example img for testing: http://qnimate.com/wp-content/uploads/2014/03/images2.jpg-->
 </head>
 <body>
     <p style="margin: auto;width: 60%;">HoneyPot - Control Panel</p>
 	<div class="video">
-    	<img style="width:  100%;" src="http://qnimate.com/wp-content/uploads/2014/03/images2.jpg">
+    	<img style="width:  100%;" src="http://<?php echo $_SERVER['HTTP_HOST']; ?>:8080/?action=stream">
 	</div>
     <div class="box" style="right: 5px;">
 		<div class="div_box top_row">
