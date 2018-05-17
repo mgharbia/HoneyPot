@@ -1,19 +1,19 @@
-var controls = {
+var camera_controls = {
 	state : "black",
 	init: function () {
 		//Key released 
 		$(document).keyup(function(e){
-			if(controls.state != "black") {
-				controls.state = "black";
-				controls.setArrowColor(e.which, controls.state, false);
+			if(camera_controls.state != "black") {
+				camera_controls.state = "black";
+				camera_controls.setArrowColor(e.which, camera_controls.state, false);
 			}
 		});
 		
 		//Key pressed
 		$(document).keydown(function(e){
-			if(controls.state != "red") {
-				controls.state = "red";
-				controls.setArrowColor(e.which, controls.state, true);
+			if(camera_controls.state != "red") {
+				camera_controls.state = "red";
+				camera_controls.setArrowColor(e.which, camera_controls.state, true);
 			}
 		});
 		
@@ -31,28 +31,28 @@ var controls = {
 		);
 		
 		$(".div_box span").click(function() {
-			controls.clickedArrow(this.className, true);
+			camera_controls.clickedArrow(this.className, true);
 		});
 			
 	}, 
 	setArrowColor: function (arrowKey, color, movement) {
 		switch (arrowKey) {
-			case 37:
+			case 65:
 				//left arrow key
-				$(".left_arrow").css("color", color);
-				controls.clickedArrow("left_arrow", movement);
+				$(".cam_left_arrow").css("color", color);
+				camera_controls.clickedArrow("cam_left_arrow", movement);
 				break;
-			case 38:    //up arrow key
-				$(".up_arrow").css("color", color);
-				controls.clickedArrow("up_arrow", movement);
+			case 87:    //up arrow key
+				$(".cam_up_arrow").css("color", color);
+				camera_controls.clickedArrow("cam_up_arrow", movement);
 				break;
-			case 39:    //right arrow key
-				$(".right_arrow").css("color", color);
-				controls.clickedArrow("right_arrow", movement);
+			case 68:    //right arrow key
+				$(".cam_right_arrow").css("color", color);
+				camera_controls.clickedArrow("cam_right_arrow", movement);
 				break;
-			case 40:    //bottom arrow key
-				$(".down_arrow").css("color", color);
-				controls.clickedArrow("down_arrow", movement);
+			case 88:    //bottom arrow key
+				$(".cam_down_arrow").css("color", color);
+				camera_controls.clickedArrow("cam_down_arrow", movement);
 				break;
 			default:
 				//console.log("There was an error in the key code: " + arrowKey + ", color: " + color);
@@ -60,23 +60,23 @@ var controls = {
 		}
 	},
 	clickedArrow: function (elementName, movement) {
-		controls.emitEvent(elementName.replace("hover", ""), movement);
+		camera_controls.emitEvent(elementName.replace("hover", ""), movement);
 	},
 	emitEvent: function (param, movement) {
 		$.ajax({
-			url: "src/controls.php?direction=" + param.split("_")[0] + "&movement=" + movement,
+			url: "src/camera_controls.php?direction=" + param.split("_")[0] + "&movement=" + movement,
 			type: "POST",
 			data: "key=" + param,
 			success: function(data){
 				console.log("AJAX success:");
-                               console.log(data);
-                               return;
+                    //TODO: remove this return!!
+                    return;
 				var result = JSON.parse(data);
 				if(result.stderr.length > 0) {
 					console.log("PANIC -> ROBOT movement error:");
 					console.log(result.stderr);
 					console.log("=============== Sending STOP action !!!");
-					controls.emitEvent("none", false);
+					camera_controls.emitEvent("none", false);
 				} else {
 					console.log(data);
 				}
@@ -91,5 +91,5 @@ var controls = {
 
 // A $( document ).ready() block.
 $( document ).ready(function() {
-    controls.init();
+    camera_controls.init();
 });
