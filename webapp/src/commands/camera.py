@@ -3,7 +3,7 @@
 import sys
 import subprocess
 
-#Standard Pin Definitions for motor
+# TODO: deprecated as PHP now calls the .sh files directly
 
 
 def main():
@@ -37,13 +37,13 @@ def main():
 def moveforward():
     """init pins"""
     print 'moveforward'
-    subprocess.call('commands/crc/rotateHorizontal.sh up'.split())
+    subprocess.call('commands/crc/rotateCam.sh up'.split())
 
 
 def movebackwards():
     """move backwards"""
     print 'movebackwards'
-    subprocess.call('commands/crc/rotateHorizontal.sh down'.split())
+    subprocess.call('commands/crc/rotateCam.sh down'.split())
 
 
 # Note: Output arrangement is important to make sure there is no jitter
@@ -55,13 +55,13 @@ def movebackwards():
 def turnright():
     """move to the right"""
     print 'turnright'
-    subprocess.call('commands/crc/rotateHorizontal.sh right'.split())
+    subprocess.call('commands/crc/rotateCam.sh right'.split())
     
 
 def turnleft():
     """move to the left"""
     print 'turnleft'
-    subprocess.call('commands/crc/rotateHorizontal.sh left'.split())
+    subprocess.call('commands/crc/rotateCam.sh left'.split())
 
 def stop():
     """STOP ALL KIND OF MOVEMENTS"""
