@@ -16,7 +16,7 @@ $res = new Response();
 $res->movement = $movementTrigger;
 $res->direction = $directionCommand;
 
-$output = execute_process("commands/camera.py " . $directionCommand . " " . $movementTrigger);
+$output = execute_process("commands/crc/rotateCam.sh " . $directionCommand);
 
 // temp class till we return real results! 
 class Response {

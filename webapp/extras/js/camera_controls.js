@@ -64,7 +64,7 @@ var camera_controls = {
 	},
 	emitEvent: function (param, movement) {
 		$.ajax({
-			url: "src/camera_controls.php?direction=" + param.split("_")[0] + "&movement=" + movement,
+			url: "src/camera_controls.php?direction=" + param.split("_")[1] + "&movement=true",
 			type: "POST",
 			data: "key=" + param,
 			success: function(data){

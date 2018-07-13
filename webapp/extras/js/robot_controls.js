@@ -64,7 +64,7 @@ var robot_controls = {
 	},
 	emitEvent: function (param, movement) {
 		$.ajax({
-			url: "src/robot_controls.php?direction=" + param.split("_")[0] + "&movement=" + movement,
+			url: "src/robot_controls.php?direction=" + param.split("_")[1] + "&movement=" + movement,
 			type: "POST",
 			data: "key=" + param,
 			success: function(data){
