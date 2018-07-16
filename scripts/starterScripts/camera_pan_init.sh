@@ -13,4 +13,8 @@ gpio pwmr 2000
 
 # center camera horizontaly
 gpio -g pwm 18 180
-gpio -g pwm 19 100
+gpio -g pwm 19 165
+
+# adjust camera new position
+echo 180 > /var/www/html/HoneyPot/webapp/src/commands/crc/cam_H_position
+echo 165 > /var/www/html/HoneyPot/webapp/src/commands/crc/cam_V_position
